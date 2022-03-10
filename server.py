@@ -1,10 +1,9 @@
 # In this video server is receiving video from clients.
-# Lets import the libraries
+#importing the libraries
 
-import socket, cv2, pickle, struct
+import socket,pickle, struct
 import imutils
 import threading
-import pyshine as ps # pip install pyshine
 import cv2
 
 server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -38,8 +37,6 @@ def show_client(addr,client_socket):
 				frame_data = data[:msg_size]
 				data  = data[msg_size:]
 				frame = pickle.loads(frame_data)
-				# text  =  f"CLIENT: {addr}"
-				# frame =  ps.putBText(frame,text,10,10,vspace=10,hspace=1,font_scale=0.7,background_RGB=(255,0,0),text_RGB=(255,250,250))
 				cv2.imshow(f"FROM {addr}",frame)
 				key = cv2.waitKey(1) & 0xFF
 				if key  == ord('q'):
