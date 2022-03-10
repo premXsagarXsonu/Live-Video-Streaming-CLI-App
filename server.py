@@ -51,5 +51,3 @@ while True:
 	thread = threading.Thread(target=show_client, args=(addr,client_socket))
 	thread.start()
 	print("TOTAL CLIENTS ",threading.activeCount() - 1)
-	
-				
