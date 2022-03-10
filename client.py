@@ -1,5 +1,3 @@
-
-# Welcome to PyShine
 # lets make the client code
 # In this code client is sending video to server
 import socket,cv2, pickle,struct
