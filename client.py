@@ -12,6 +12,7 @@ class Send(object):
 
 	def video(self):
 		ip = input("Enter The Desitnation IP: ")
+		
 		video_file = input("Video File Adddress: ")
 		vid = cv2.VideoCapture(video_file)
 		client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -19,6 +20,29 @@ class Send(object):
 		port = 9999
 		client_socket.connect((host_ip,port))
 
+		response = client_socket.recv(2048)
+		# Input UserName
+		name = input(response.decode())	
+		client_socket.send(str.encode(name))
+		response = client_socket.recv(2048)
+		# Input Password
+		password = input(response.decode())	
+		client_socket.send(str.encode(password))
+
+		''' Response : Status of Connection :
+			1 : Registeration successful 
+			2 : Connection Successful
+			3 : Login Failed
+		'''
+		# Receive response 
+		response = client_socket.recv(2048)
+		response = response.decode()
+
+		print(response)
+		if(response == "Login Falied"):
+			client_socket.close()
+			return
+			
 		if client_socket: 
 			while (vid.isOpened()):
 				try:
@@ -43,6 +67,26 @@ class Send(object):
 		host_ip = ip
 		port = 9999
 		client_socket.connect((host_ip,port))
+
+		response = client_socket.recv(2048)
+		# Input UserName
+		name = input(response.decode())	
+		client_socket.send(str.encode(name))
+		response = client_socket.recv(2048)
+		# Input Password
+		password = input(response.decode())	
+		client_socket.send(str.encode(password))
+
+		''' Response : Status of Connection :
+			1 : Registeration successful 
+			2 : Connection Successful
+			3 : Login Failed
+		'''
+		# Receive response 
+		response = client_socket.recv(2048)
+		response = response.decode()
+
+		print(response)
 
 		if client_socket: 
 			while (vid.isOpened()):

@@ -5,6 +5,9 @@ import socket,pickle, struct
 import imutils
 import threading
 import cv2
+import os
+import hashlib
+import json
 
 server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 host_name  = socket.gethostname()
@@ -16,6 +19,24 @@ socket_address = (host_ip,port)
 server_socket.bind(socket_address)
 server_socket.listen()
 print("Listening at",socket_address)
+
+HashTable = {}
+ThreadCount = 0
+
+with open('users.txt') as f_in:
+    HashTable = json.load(f_in)
+
+def init():
+    global ThreadCount
+    while True:
+        client_socket, address = server_socket.accept()
+        client_handler = threading.Thread(
+            target=threaded_client,
+            args=(address,client_socket)  
+        )
+        client_handler.start()
+        ThreadCount += 1
+        print('Connection Request: ' + str(ThreadCount))
 
 def show_client(addr,client_socket):
 	try:
@@ -45,9 +66,47 @@ def show_client(addr,client_socket):
 	except Exception as e:
 		print(f"CLINET {addr} DISCONNECTED")
 		pass
-		
-while True:
-	client_socket,addr = server_socket.accept()
-	thread = threading.Thread(target=show_client, args=(addr,client_socket))
-	thread.start()
-	print("TOTAL CLIENTS ",threading.activeCount() - 1)
+
+
+# Function : For each client 
+def threaded_client(addr,client_socket):
+    client_socket.send(str.encode('Enter User Name : ')) # Request Username
+    name = client_socket.recv(2048)
+    client_socket.send(str.encode('Enter Password : ')) # Request Password
+    password = client_socket.recv(2048)
+    password = password.decode()
+    name = name.decode()
+    password=hashlib.sha256(str.encode(password)).hexdigest() # Password hash using SHA256
+# REGISTERATION PHASE   
+# If new user,  regiter in Hashtable Dictionary  
+    if name not in HashTable:
+        HashTable[name]=password
+
+        with open('users.txt', 'w') as json_file:
+            json.dump(HashTable, json_file)
+
+        client_socket.send(str.encode('Registeration Successful')) 
+        print('Registered : ',name)
+        print("{:<8} {:<20}".format('USER','PASSWORD'))
+        for k, v in HashTable.items():
+            label, num = k,v
+            print("{:<8} {:<20}".format(label, num))
+        print("-------------------------------------------")
+        show_client(addr,client_socket)
+        client_socket.close()
+    else:
+# If already existing user, check if the entered password is correct
+        if(HashTable[name] == password):
+            client_socket.send(str.encode('Connection Successful')) # Response Code for Connected Client 
+            print('Connected : ',name)
+            show_client(addr,client_socket)
+        else:
+            # client_socket.send(str.encode('Login Failed')) # Response code for login failed
+            client_socket.send(str.encode("Login Failed")) # Response code for login failed
+            print('Connection denied : ',name)
+            client_socket.close()
+    while True:
+        break
+    
+
+init()
