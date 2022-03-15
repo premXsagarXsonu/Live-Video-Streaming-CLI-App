@@ -9,6 +9,12 @@ import os
 import hashlib
 import json
 
+from termcolor import colored
+from pyfiglet import Figlet
+
+f = Figlet(font='standard')
+print(colored(f.renderText('Send is Live'),'green'))
+
 server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 host_name  = socket.gethostname()
 print(host_name)

@@ -2,11 +2,15 @@
 import socket,cv2, pickle,struct
 import imutils # pip install imutils
 import fire #creating cli apps
+from termcolor import colored
+from pyfiglet import Figlet
 
+f = Figlet(font='standard')
+print(colored(f.renderText('Send is Ready'),'green'))
 
 class Stream(object):
 	def __init__(self):
-		self.BOX = Send() 
+		self.SEND = Send() 
 
 class Send(object):
 
