@@ -1,14 +1,14 @@
-#SEND is the name of this CLI app.
+#SEND CLI app.
 
 ** What **
 
-# Where you can use bunch of Systems as Clients and Server that are connected to a Network to Stream Live Video or Existing video file to Server.
+# Where you can use bunch of Client Systems and Server that are connected to a Network to Stream Live Video or Existing video file to Server.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ** Where **
 
 # Using CLient systems as Security Camera
-# Monitoring Client Video stream (For Online Based Exams/Interviews)
+# Monitoring Clients using Video stream (For Online Based Exams/Interviews)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ** Note **
@@ -24,6 +24,7 @@
 
 (Client)  
          [for live stream] ---> python client.py SEND stream
+         
          [for video file ] ---> python client.py SEND video
          
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
