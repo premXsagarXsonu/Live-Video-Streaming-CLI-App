@@ -20,12 +20,19 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ** How ** 
 
-(Server)  ---> python Server.py
+(Server)  ---> 
+           
+          python Server.py
 
 (Client)  
-         [for live stream] ---> python client.py SEND stream
+        
+         [for live stream] ---> 
          
-         [for video file ] ---> python client.py SEND video
+         python client.py SEND stream
+         
+         [for video file ] ---> 
+         
+         python client.py SEND video
          
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
