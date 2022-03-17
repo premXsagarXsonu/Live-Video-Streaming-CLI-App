@@ -1,8 +1,8 @@
-#SEND CLI app.
+#SEND video Streaming CLI app.
 
 ** What **
 
-# Where you can use bunch of Client Systems and Server that are connected to a Network to Stream Live Video or Existing video file to Server.
+# Using SEND you can use bunch of Client Systems and Server that are connected to a Network to Stream Live Video or Existing video file to Server.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ** Where **
